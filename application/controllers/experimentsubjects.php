@@ -19,9 +19,9 @@ class Experimentsubjects_Controller extends Base_Controller
 
 	public function get_experimentsubject($id)
 	{
-		$experimentSubject = Experimentsubject::find((int)$id);
+		$experimentsubject = Experimentsubject::find((int)$id);
 
-		if($experimentSubject)
+		if($experimentsubject)
 		{
 			return Response::json($experimentsubject->to_array());
 		} else {

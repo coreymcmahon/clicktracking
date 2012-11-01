@@ -51,6 +51,11 @@ Route::controller('Experimentsubjects');
 // experiment observations
 Route::controller('Experimentobservations');
 
+Route::get('/this-is-a-test', function () {
+	
+	// @TODO: remove me!
+
+});
 /*
 |--------------------------------------------------------------------------
 | Application 404 & 500 Error Handlers

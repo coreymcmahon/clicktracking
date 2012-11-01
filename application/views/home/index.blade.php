@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Laravel: A Framework For Web Artisans</title>
+	<title>Control Panel | Clicktracking</title>
 	<meta name="viewport" content="width=device-width">
 	{{ HTML::style('laravel/css/style.css') }}
 	{{ Asset::styles() }}
