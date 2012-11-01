@@ -6,19 +6,73 @@
 	<title>Laravel: A Framework For Web Artisans</title>
 	<meta name="viewport" content="width=device-width">
 	{{ HTML::style('laravel/css/style.css') }}
+	{{ Asset::scripts() }}
 </head>
 <body>
 	<div class="wrapper">
 		<header>
-			<h1>Laravel</h1>
-			<h2>A Framework For Web Artisans</h2>
+			<h1>Clicktracking control panel</h1>
+			<h2>Do all the things</h2>
 
 			<p class="intro-text" style="margin-top: 45px;">
 			</p>
 		</header>
 		<div role="main" class="main">
 			<div class="home">
-				<h2>Learn the terrain.</h2>
+				<h2>Experiments</h2>
+				<div>
+					<pre>POST /experiments</pre>
+				</div>
+				<div>
+					<label for="name">Name: </label> <input type="text" name="name" id="name">
+					<label for="url">URL: </label> <input type="text" name="url" id="url">
+					<button id="post-experiment">POST</button>
+				</div>
+				<div>
+					<pre>GET /experiments</pre>
+				</div>
+				<div>
+					<button id="get-experiment">GET</button>
+				</div>
+				<hr/>
+				<h2>Experiment Subjects</h2>
+				<div>
+					<pre>POST /experimentsubjects</pre>
+				</div>
+				<div>
+					<label for="experiment">Experiment: </label>
+					<select id="experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+
+					<label for="CSS Selector">: </label> <input type="text" name="selector" id="selector">
+
+					<button id="post-experimentsubject">POST</button>
+				</div>
+				<div>
+					<pre>GET /experimentsubjects</pre>
+				</div>
+				<div>
+					<button id="get-experimentsubjects">GET</button>
+				</div>
+				<hr/>
+				<h2>Experiment Observations</h2>
+				<div>
+					<pre>POST /experimentobvservations</pre>
+				</div>
+				<div>
+					
+					<button id="post-experimentobservations">POST</button>
+				</div>
+				<div>
+					<pre>GET /experimentobservations</pre>
+				</div>
+				<div>
+					<button id="get-experimentobservations">GET</button>
+				</div>
+				<!-- <h2>Learn the terrain.</h2>
 
 				<p>
 					You've landed yourself on our default home page. The route that
@@ -50,7 +104,7 @@
 					<li><a href="http://forums.laravel.com">Laravel Forums</a></li>
 					<li><a href="http://github.com/laravel/laravel">GitHub Repository</a></li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </body>

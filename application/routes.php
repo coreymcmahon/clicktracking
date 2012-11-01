@@ -34,10 +34,21 @@
 
 Route::get('/', function()
 {
-	return View::make('home.index');
+	Asset::add('home', 'js/home.js');
+	return View::make('home.index', array(
+		'experiments' => Experiment::all()
+	));
 });
 
+// experiments
+Route::get('experiments/(:num)', 'experiments@experiment');
 Route::controller('Experiments');
+
+// experiment subjects
+Route::controller('Experimentsubjects');
+
+// experiment observations
+Route::controller('Experimentobservations');
 
 /*
 |--------------------------------------------------------------------------
@@ -94,7 +105,9 @@ Event::listen('500', function()
 
 Route::filter('before', function()
 {
-	// Do stuff before every request to your application...
+	Asset::add('jquery','js/jquery-1.8.2.min.js');
+	Asset::add('underscore','js/underscore-min.js');
+	Asset::add('backbone','js/backbone-min.js');
 });
 
 Route::filter('after', function($response)
