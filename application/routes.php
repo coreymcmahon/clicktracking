@@ -52,6 +52,16 @@ Route::controller('Experiments');
 Route::controller('Experimentsubjects');
 Route::controller('Experimentobservations');
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+Route::get('/clicktracking.js', function () {
+	$view = View::make('javascript.clicktracking', array(
+		'experiments' => Experiment::allAsArray(),
+		'experimentsubjects' => Experimentsubject::allAsArray(),
+	));
+
+	return new Response($view->render(), 200, array('Content-type' => 'text/javascript'));
+});
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
