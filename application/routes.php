@@ -60,7 +60,10 @@ Route::get('/clicktracking.js', function () {
 		'experimentsubjects' => Experimentsubject::allAsArray(),
 	));
 
-	return new Response($view->render(), 200, array('Content-type' => 'text/javascript'));
+	return new Response($view->render(), 200, array(
+		'Access-Control-Allow-Origin' => Request::header('Origin', '*'),
+		'Content-type' => 'text/javascript; charset=utf-8',
+	));
 });
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

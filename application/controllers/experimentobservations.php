@@ -14,7 +14,7 @@ class Experimentobservations_Controller extends Base_Controller
 			$experimentobservationsArray[] = $experimentobservation->to_array();
 		}
 
-		return Response::json($experimentobservationsArray);
+		return Response::json($experimentobservationsArray, 200, array('Access-Control-Allow-Origin' => Request::header('Origin', '*')));
 	}
 
 	public function get_experimentobservation($id)
@@ -32,6 +32,7 @@ class Experimentobservations_Controller extends Base_Controller
 	public function post_index()
 	{
 		$input = Input::json();
+		$results = array();
 
 		if (!is_array($input)) {
 			$input = array($input);
@@ -46,7 +47,7 @@ class Experimentobservations_Controller extends Base_Controller
 				->get();
 
 			if ($experimentobservation) {
-
+				$experimentobservation->clicks = (int)$experimentobservation->clicks + (int)$observation->clicks;
 			} else {
 				$experimentobservation = new Experimentobservation(array(
 					'experiment_id' => $observation->experiment_id,
@@ -59,10 +60,13 @@ class Experimentobservations_Controller extends Base_Controller
 					'session_updated_at' => $observation->session_updated_at
 				));
 			}
-		}
-		
-		$experimentobservation->save();
 
-		return $this->get_experimentobservation($experimentobservation->id);
+			$experimentobservation->save();
+			$results[] = $experimentobservation;
+		}
+
+		Response::json($results, 200, array(
+			'Access-Control-Allow-Origin' => Request::header('Origin', '*'),
+		));
 	}
 }

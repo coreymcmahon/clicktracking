@@ -106,7 +106,8 @@ $(function () {
 			url: '{{ URL::to_action('experimentobservations') }}',
 			data: window.clicktracking,
 			dataType: 'json',
-			async: false
+			async: false,
+			crossDomain: true
 		});
 	};
 
