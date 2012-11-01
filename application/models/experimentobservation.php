@@ -6,16 +6,60 @@ class Experimentobservation extends Eloquent
 	 * Usage per session
 	 *	The number of user sessions involving 
 	 */
-	public function usage_per_session($experimentId, $storeId = null)
+	public static function usage_per_session($experimentId, $storeId = null)
 	{
-		// @TODO: implement
+		$sql = '
+			SELECT 
+			 COUNT(experiment_subject_id) AS num_sessions,
+			 experiment_subject_id, 
+			 experiment_id
+			FROM
+			 experimentobservations
+			WHERE
+			 experiment_id = ? 
+			 ' . self::get_store_and_where_clause($storeId) . ' 
+			GROUP BY experiment_subject_id
+		';
+		$allQuery = DB::query($sql, array((int)$experimentId));
+
+		$sql = '
+			SELECT 
+			 COUNT(experiment_subject_id) AS num_sessions,
+			 experiment_subject_id, 
+			 experiment_id
+			FROM
+			 experimentobservations
+			WHERE
+			 experiment_id = ? 
+			 AND clicks > 0 
+			 ' . self::get_store_and_where_clause($storeId) . ' 
+			GROUP BY experiment_subject_id
+		';
+		$hasClicksQuery = DB::query($sql, array((int)$experimentId));
+
+		$result = array();
+		foreach ($allQuery as $row)
+		{
+			$result[$row->experiment_subject_id] = array(
+				'num_sessions' => $row->num_sessions,
+				'experiment_subject_id' => $row->experiment_subject_id,
+				'experiment_id' => $row->experiment_id,
+			);
+		}
+
+		foreach ($hasClicksQuery as $row)
+		{
+			$result[$row->experiment_subject_id]['num_used_sessions'] = $row->num_sessions;
+		}
+
+		return $result;
 	}
 
 	/**
 	 * Element ranking
 	 * 	Rank all the elements in this experiment, based on the number of clicks.
 	 */
-	public function element_ranking($experimentId, $storeId = null)
+	public static function element_ranking($experimentId, $storeId = null)
 	{
 		$sql = '
 			SELECT 
@@ -23,8 +67,8 @@ class Experimentobservation extends Eloquent
 			FROM 
 				experimentobservations 
 			WHERE 
-				experiment_id = ? '
-			. self::get_store_and_where_clause($storeId) . ' 
+				experiment_id = ? 
+			 ' . self::get_store_and_where_clause($storeId) . ' 
 			
 			GROUP BY experiment_subject_id 
 			ORDER BY sum_clicks ASC
@@ -38,8 +82,9 @@ class Experimentobservation extends Eloquent
 	 * Time to first click
 	 *	
 	 */
-	public function time_to_first_click($experimentId, $storeId = null)
+	public static function time_to_first_click($experimentId, $storeId = null)
 	{
+		return array('not yet implemented :(');
 		// @TODO: implement
 	}
 
@@ -47,17 +92,17 @@ class Experimentobservation extends Eloquent
 	 * Number of average clicks
 	 *	The average number of clicks 
 	 */
-	public function number_of_average_clicks($experimentId, $storeId = null)
+	public static function number_of_average_clicks($experimentId, $storeId = null)
 	{
-		// @TODO: implement
 		$sql = '
 			SELECT 
 				AVG(clicks) AS avg_clicks, experiment_subject_id, experiment_id
 			FROM 
 				experimentobservations 
 			WHERE 
-				experiment_id = ? '
-			. self::get_store_and_where_clause($storeId) . '
+				experiment_id = ? 
+			 ' . self::get_store_and_where_clause($storeId) . ' 
+
 			GROUP BY experiment_subject_id 
 		';
 

@@ -32,6 +32,9 @@
 |
 */
 
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 Route::get('/', function()
 {
 	Asset::add('home', 'js/home.js');
@@ -41,21 +44,64 @@ Route::get('/', function()
 	));
 });
 
-// experiments
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 Route::get('experiments/(:num)', 'experiments@experiment');
 Route::controller('Experiments');
-
-// experiment subjects
 Route::controller('Experimentsubjects');
-
-// experiment observations
 Route::controller('Experimentobservations');
 
-Route::get('/this-is-a-test', function () {
-	
-	// @TODO: remove me!
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+Route::get('results/usage-per-session/(:num)', function ($id) {
+	$results = Experimentobservation::usage_per_session($id);
+	return Response::json($results);
 });
+Route::get('results/usage-per-session/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::usage_per_session($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/element-ranking/(:num)', function ($id) {
+	$results = Experimentobservation::element_ranking($id);
+	return Response::json($results);
+});
+Route::get('results/element-ranking/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::element_ranking($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/time-to-first-click/(:num)', function ($id) {
+	$results = Experimentobservation::time_to_first_click($id);
+	return Response::json($results);
+});
+Route::get('results/time-to-first-click/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::time_to_first_click($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/number-of-average-clicks/(:num)', function ($id) {
+	$results = Experimentobservation::number_of_average_clicks($id);
+	return Response::json($results);
+});
+Route::get('results/number-of-average-clicks/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::number_of_average_clicks($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/(:any)', function () {
+	return Response::error('404');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application 404 & 500 Error Handlers

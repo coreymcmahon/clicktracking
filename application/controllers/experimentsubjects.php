@@ -25,7 +25,7 @@ class Experimentsubjects_Controller extends Base_Controller
 		{
 			return Response::json($experimentsubject->to_array());
 		} else {
-			return Response::error(404);
+			return Response::error('404');
 		}
 	}
 
