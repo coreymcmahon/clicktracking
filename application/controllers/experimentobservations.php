@@ -32,17 +32,35 @@ class Experimentobservations_Controller extends Base_Controller
 	public function post_index()
 	{
 		$input = Input::json();
+
+		if (!is_array($input)) {
+			$input = array($input);
+		}
+
+		foreach ($input as $observation)
+		{
+			$experimentobservation = DB::table('experimentobservations')
+				->where('experiment_id', '=', $observation->experiment_id)
+				->where('experiment_subject_id', '=', $observation->experiment_subject_id)
+				->where('session', '=', $observation->session)
+				->get();
+
+			if ($experimentobservation) {
+
+			} else {
+				$experimentobservation = new Experimentobservation(array(
+					'experiment_id' => $observation->experiment_id,
+					'experiment_subject_id' => $observation->experiment_subject_id,
+					'clicks' => $observation->clicks,
+					'store_id' => $observation->store_id,
+					'username' => $observation->username,
+					'session' => $observation->session,
+					'session_start' => $observation->session_start,
+					'session_updated_at' => $observation->session_updated_at
+				));
+			}
+		}
 		
-		$experimentobservation = new Experimentobservation(array(
-			'experiment_id' => $input->experiment_id,
-			'experiment_subject_id' => $input->experiment_subject_id,
-			'clicks' => $input->clicks,
-			'store_id' => $input->store_id,
-			'username' => $input->username,
-			'session' => $input->session,
-			'session_start' => $input->session_start,
-			'session_updated_at' => $input->session_updated_at
-		));
 		$experimentobservation->save();
 
 		return $this->get_experimentobservation($experimentobservation->id);
