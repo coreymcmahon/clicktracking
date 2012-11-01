@@ -16,7 +16,11 @@ $(function () {
 			name: $('#name').val(),
 			url: $('#url').val()
 		});
-		experiment.save();
+		experiment.save({}, {
+			success: function () {
+				toastr.info('Experiment added.');
+			}
+		});
 	});
 	$('#get-experiment').on('click', function () {
 		window.location = '/experiments'
@@ -28,7 +32,11 @@ $(function () {
 			experiment_id: $('#experiment').val(),
 			selector: $('#selector').val()
 		});
-		experimentsubject.save();
+		experimentsubject.save({}, {
+			success: function () {
+				toastr.info('Experiment subject added.');
+			}
+		});
 	});
 	$('#get-experimentsubject').on('click', function () {
 		window.location = '/experimentsubjects'
@@ -46,7 +54,11 @@ $(function () {
 			session_start: $('#experiement-observation-session-start').val(),
 			session_updated_at: $('#experiement-observation-session-updated-at').val()
 		});
-		experimentobservation.save();
+		experimentobservation.save({}, {
+			success: function () {
+				toastr.info('Experiment observation added.');
+			}
+		});
 	});
 	$('#get-experimentobservation').on('click', function () {
 		window.location = '/experimentobservations'

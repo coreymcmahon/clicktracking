@@ -106,9 +106,17 @@ Event::listen('500', function()
 
 Route::filter('before', function()
 {
+	// include jquery
 	Asset::add('jquery','js/jquery-1.8.2.min.js');
+	
+	// include backbone
 	Asset::add('underscore','js/underscore-min.js');
 	Asset::add('backbone','js/backbone-min.js');
+
+	// include toastr
+	Asset::add('toastrcss','css/toastr.css');
+	Asset::add('toastrcssresponsive','css/toastr-responsive.css');
+	Asset::add('toastrjs','js/toastr.js');
 });
 
 Route::filter('after', function($response)
