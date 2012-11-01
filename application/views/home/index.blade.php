@@ -117,6 +117,138 @@
 				<div>
 					<button id="get-experimentobservation">GET</button>
 				</div>
+				<hr/>
+
+				<h2>Query endpoints</h2>
+				<div>
+					<pre>results/usage-per-session/(:experiment-id)</pre>
+				</div>
+				<div>
+					<label for="usage-per-session-experiment">Experiment: </label>
+					<select id="usage-per-session-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<button id="usage-per-session-experiment-button">GO</button>
+				</div>
+
+				<div>
+					<pre>results/usage-per-session/(:experiment-id)/store/(:store-id)</pre>
+				</div>
+				<div>
+					<label for="usage-per-session-store-experiment">Experiment: </label>
+					<select id="usage-per-session-store-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<br/>
+					<label for="usage-per-session-store-store-id">Store ID: </label> 
+					<select id="usage-per-session-store-store-id">
+						@foreach ($storeIds as $storeId)
+						<option value="{{ $storeId->store_id }}">{{ $storeId->store_id }}</option>
+						@endforeach
+					</select>
+					<button id="usage-per-session-store-experiment-button">GO</button>
+				</div>
+
+				<div>
+					<pre>results/element-ranking/(:experiment-id)</pre>
+				</div>
+				<div>
+					<label for="element-ranking-experiment">Experiment: </label>
+					<select id="element-ranking-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<button id="element-ranking-experiment-button">GO</button>
+				</div>
+				<div>
+					<pre>results/element-ranking/(:experiment-id)/store/(:store-id)</pre>
+				</div>
+				<div>
+					<label for="element-ranking-store-experiment">Experiment: </label>
+					<select id="element-ranking-store-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<br/>
+					<label for="element-ranking-store-store-id">Store ID: </label> 
+					<select id="element-ranking-store-store-id">
+						@foreach ($storeIds as $storeId)
+						<option value="{{ $storeId->store_id }}">{{ $storeId->store_id }}</option>
+						@endforeach
+					</select>
+					<button id="element-ranking-store-experiment-button">GO</button>
+				</div>
+
+				<div>
+					<pre>results/time-to-first-click/(:experiment-id)</pre>
+				</div>
+				<div>
+					<label for="time-to-first-click-experiment">Experiment: </label>
+					<select id="time-to-first-click-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<button id="time-to-first-click-experiment-button">GO</button>
+				</div>
+				<div>
+					<pre>results/time-to-first-click/(:experiment-id)/store/(:store-id)</pre>
+				</div>
+				<div>
+					<label for="time-to-first-click-store-experiment">Experiment: </label>
+					<select id="time-to-first-click-store-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<br/>
+					<label for="time-to-first-click-store-store-id">Store ID: </label> 
+					<select id="time-to-first-click-store-store-id">
+						@foreach ($storeIds as $storeId)
+						<option value="{{ $storeId->store_id }}">{{ $storeId->store_id }}</option>
+						@endforeach
+					</select>
+					<button id="time-to-first-click-store-experiment-button">GO</button>
+				</div>
+
+				<div>
+					<pre>results/number-of-average-clicks/(:experiment-id)</pre>
+				</div>
+				<div>
+					<label for="number-of-average-clicks-experiment">Experiment: </label>
+					<select id="number-of-average-clicks-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<button id="number-of-average-clicks-experiment-button">GO</button>
+				</div>
+				<div>
+					<pre>results/number-of-average-clicks/(:experiment-id)/store/(:store-id)</pre>
+				</div>
+				<div>
+					<label for="number-of-average-clicks-store-experiment">Experiment: </label>
+					<select id="number-of-average-clicks-store-experiment">
+						@foreach ($experiments as $experiment)
+						<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+						@endforeach
+					</select>
+					<br/>
+					<label for="number-of-average-clicks-store-store-id">Store ID: </label> 
+					<select id="number-of-average-clicks-store-store-id">
+						@foreach ($storeIds as $storeId)
+						<option value="{{ $storeId->store_id }}">{{ $storeId->store_id }}</option>
+						@endforeach
+					</select>
+					<button id="number-of-average-clicks-store-experiment-button">GO</button>
+				</div>
+
 				<!-- <h2>Learn the terrain.</h2>
 
 				<p>

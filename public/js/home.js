@@ -23,7 +23,7 @@ $(function () {
 		});
 	});
 	$('#get-experiment').on('click', function () {
-		window.location = '/experiments'
+		window.location = '/experiments';
 	});
 
 	/**/
@@ -39,7 +39,7 @@ $(function () {
 		});
 	});
 	$('#get-experimentsubject').on('click', function () {
-		window.location = '/experimentsubjects'
+		window.location = '/experimentsubjects';
 	});
 
 	/**/
@@ -61,8 +61,28 @@ $(function () {
 		});
 	});
 	$('#get-experimentobservation').on('click', function () {
-		window.location = '/experimentobservations'
+		window.location = '/experimentobservations';
 	});
+
+
+	$.each(['usage-per-session-experiment', 'element-ranking-experiment', 'time-to-first-click-experiment', 'number-of-average-clicks-experiment'], function (i, e) {
+		$('#' + e + "-button").on('click', getApiRedirectFunction(e.replace('-experiment',''), e));
+	});
+
+	$.each(['usage-per-session-store-experiment', 'element-ranking-store-experiment', 'time-to-first-click-store-experiment', 'number-of-average-clicks-store-experiment'], function (i,e) {
+		$('#' + e + "-button").on('click', getApiRedirectFunction(e.replace('-store-experiment',''), e.replace('-store', ''), e.replace('-experiment','') + "-store-id"));
+	});
+
 });
 
+var getApiRedirectFunction = function (path, experimentIdElementId, storeIdElementId) {
+	return function () {
+		var storePath = '';
+		if (storeIdElementId !== undefined)
+		{
+			storePath = '/store/' + $('#' + storeIdElementId).val();
+		}
+		window.open('results/' + path + '/' + $('#' + experimentIdElementId).val() + storePath, '_blank');
+	};
+};
 

@@ -2,6 +2,12 @@
 
 class Experimentobservation extends Eloquent
 {
+
+	public static function get_store_ids()
+	{
+		return DB::query('SELECT DISTINCT(store_id) AS store_id FROM experimentobservations;');
+	}
+
 	/**
 	 * Usage per session
 	 *	The number of user sessions involving 

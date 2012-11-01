@@ -41,6 +41,7 @@ Route::get('/', function()
 	return View::make('home.index', array(
 		'experiments' => Experiment::all(),
 		'experimentsubjects' => Experimentsubject::all(),
+		'storeIds' => Experimentobservation::get_store_ids(),
 	));
 });
 
