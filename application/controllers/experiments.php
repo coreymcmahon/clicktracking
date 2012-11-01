@@ -39,6 +39,6 @@ class Experiments_Controller extends Base_Controller
 		));
 		$experiment->save();
 
-		return $this->get_index($experiment->id);
+		return $this->get_experiment($experiment->id);
 	}
 }

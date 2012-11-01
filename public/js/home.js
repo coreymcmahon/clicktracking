@@ -7,7 +7,7 @@ var Experimentsubject = Backbone.Model.extend({
 });
 
 var Experimentobservation = Backbone.Model.extend({
-	url: '/Experimentobservations'
+	url: '/experimentobservations'
 });
 
 $(function () {
@@ -25,12 +25,32 @@ $(function () {
 	/**/
 	$('#post-experimentsubject').on('click', function () {
 		var experimentsubject = new Experimentsubject({
-			experiment_id: $('experiment').val(),
+			experiment_id: $('#experiment').val(),
 			selector: $('#selector').val()
 		});
-		experiment.save();
+		experimentsubject.save();
 	});
 	$('#get-experimentsubject').on('click', function () {
 		window.location = '/experimentsubjects'
 	});
+
+	/**/
+	$('#post-experimentobservation').on('click', function () {
+		var experimentobservation = new Experimentobservation({
+			experiment_id: $('#experiement-observation-experiment-id').val(),
+			experiment_subject_id: $('#experiement-observation-experiment-subject-id').val(),
+			clicks: $('#experiement-observation-clicks').val(),
+			store_id: $('#experiement-observation-store-id').val(),
+			username: $('#experiement-observation-username').val(),
+			session: $('#experiement-observation-session').val(),
+			session_start: $('#experiement-observation-session-start').val(),
+			session_updated_at: $('#experiement-observation-session-updated-at').val()
+		});
+		experimentobservation.save();
+	});
+	$('#get-experimentobservation').on('click', function () {
+		window.location = '/experimentobservations'
+	});
 });
+
+

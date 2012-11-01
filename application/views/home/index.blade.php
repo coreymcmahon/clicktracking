@@ -7,6 +7,9 @@
 	<meta name="viewport" content="width=device-width">
 	{{ HTML::style('laravel/css/style.css') }}
 	{{ Asset::scripts() }}
+	<style>
+	.experiment-observation-table .footer-row { text-align: right; }
+	</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -55,7 +58,7 @@
 					<pre>GET /experimentsubjects</pre>
 				</div>
 				<div>
-					<button id="get-experimentsubjects">GET</button>
+					<button id="get-experimentsubject">GET</button>
 				</div>
 				<hr/>
 				<h2>Experiment Observations</h2>
@@ -63,14 +66,55 @@
 					<pre>POST /experimentobvservations</pre>
 				</div>
 				<div>
-					
-					<button id="post-experimentobservations">POST</button>
+					<table class="experiment-observation-table">
+						<tr>
+							<td><label for="experiement-observation-experiment-id">Experiment: </label> </td>
+							<td><select id="experiement-observation-experiment-id">
+								@foreach ($experiments as $experiment)
+								<option value="{{ $experiment->id }}">{{ $experiment->name }}</option>
+								@endforeach
+							</select></td>
+
+							<td><label for="experiement-observation-experiment-subject-id">Subject: </label> </td>
+							<td><select id="experiement-observation-experiment-subject-id">
+								@foreach ($experimentsubjects as $experimentsubject)
+								<option value="{{ $experimentsubject->id }}">{{ $experimentsubject->selector }}</option>
+								@endforeach
+							</select></td>
+						</tr>
+						<tr>
+							<td class="labels"><label for="experiement-observation-clicks">Clicks: </label></td>
+							<td class="inputs"><input type="text" name="experiement-observation-clicks" id="experiement-observation-clicks" value="0"></td>
+						</tr>
+						<tr>
+							<td class="labels"><label for="experiement-observation-store-id">Store ID: </label></td>
+							<td class="inputs"><input type="text" name="experiement-observation-store-id" id="experiement-observation-store-id" value="72142"></td>
+						</tr>
+						<tr>
+							<td class="labels"><label for="experiement-observation-username">Username: </label></td>
+							<td class="inputs"><input type="text" name="experiement-observation-username" id="experiement-observation-username" value="admin"></td>
+						</tr>
+						<tr>
+							<td class="labels"><label for="experiement-observation-session">Session: </label></td>
+							<td class="inputs"><input type="text" name="experiement-observation-session" id="experiement-observation-session" value="{{ uniqid() }}"></td>
+						</tr>
+						<tr>
+							<td class="labels"><label for="experiement-observation-session-start">Session start: </label></td>
+							<td class="inputs"><input type="text" name="experiement-observation-session-start" id="experiement-observation-session-start" value="{{ date('Y-m-d H:i:s') }}"></td>
+						</tr>
+						<tr>
+							<td class="labels"><label for="experiement-observation-session-updated-at">Session last-updated: </label></td>
+							<td class="inputs"><input type="text" name="experiement-observation-session-updated-at" id="experiement-observation-session-updated-at" value="{{ date('Y-m-d H:i:s') }}"></td>
+						</tr>
+						<tr class="footer-row">
+							<td colspan="2"><button id="post-experimentobservation">POST</button></td>
+					</table>
 				</div>
 				<div>
 					<pre>GET /experimentobservations</pre>
 				</div>
 				<div>
-					<button id="get-experimentobservations">GET</button>
+					<button id="get-experimentobservation">GET</button>
 				</div>
 				<!-- <h2>Learn the terrain.</h2>
 

@@ -36,7 +36,8 @@ Route::get('/', function()
 {
 	Asset::add('home', 'js/home.js');
 	return View::make('home.index', array(
-		'experiments' => Experiment::all()
+		'experiments' => Experiment::all(),
+		'experimentsubjects' => Experimentsubject::all(),
 	));
 });
 
