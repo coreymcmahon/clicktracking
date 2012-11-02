@@ -2,6 +2,18 @@ $(function () {
 	
 	window.clicktracking = window.clicktracking || [];
 
+	window.forceClicktracking = function () {
+		$.ajax({
+			type: 'POST',
+			url: '/admin/clicktracking/experimentobservations',
+			data: JSON.stringify(window.clicktracking),
+			contentType: 'application/json',
+			dataType: 'json',
+			async: false,
+			processData: false
+		});
+	};
+
 	// load the experiment data...
 	var experiments = {{ json_encode($experiments) }};
 	var experimentsubjects = {{ json_encode($experimentsubjects) }};
@@ -98,20 +110,8 @@ $(function () {
 				}
 			});
 		});
+
+		$(window).unload(window.forceClicktracking);
 	}
-
-	window.forceClicktracking = function () {
-		$.ajax({
-			type: 'POST',
-			url: '{{ URL::to_action('experimentobservations') }}',
-			data: window.clicktracking,
-			dataType: 'json',
-			async: false,
-			crossDomain: true
-		});
-	};
-
-	// @TODO: remove comment below
-	//$(window).unload(window.forceClickTracking);
-
 });
+

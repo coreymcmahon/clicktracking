@@ -77,7 +77,7 @@ class Experimentobservation extends Eloquent
 			 ' . self::get_store_and_where_clause($storeId) . ' 
 			
 			GROUP BY experiment_subject_id 
-			ORDER BY sum_clicks ASC
+			ORDER BY sum_clicks DESC
 		';
 
 		// for each experiment, take the summation of the number of 'clicks' for each experiment subject

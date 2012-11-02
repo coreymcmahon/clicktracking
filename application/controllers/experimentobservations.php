@@ -44,9 +44,10 @@ class Experimentobservations_Controller extends Base_Controller
 				->where('experiment_id', '=', $observation->experiment_id)
 				->where('experiment_subject_id', '=', $observation->experiment_subject_id)
 				->where('session', '=', $observation->session)
-				->get();
+				->first();
 
 			if ($experimentobservation) {
+				$experimentobservation = Experimentobservation::find((int)$experimentobservation->id);
 				$experimentobservation->clicks = (int)$experimentobservation->clicks + (int)$observation->clicks;
 			} else {
 				$experimentobservation = new Experimentobservation(array(
@@ -62,10 +63,10 @@ class Experimentobservations_Controller extends Base_Controller
 			}
 
 			$experimentobservation->save();
-			$results[] = $experimentobservation;
+			$results[] = $experimentobservation->to_array();
 		}
 
-		Response::json($results, 200, array(
+		return Response::json($results, 200, array(
 			'Access-Control-Allow-Origin' => Request::header('Origin', '*'),
 		));
 	}

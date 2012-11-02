@@ -66,6 +66,15 @@ Route::get('/clicktracking.js', function () {
 	));
 });
 
+Route::get('/clicktracking.hmap.js', function () {
+	$view = View::make('javascript.clicktrackinghmap');
+
+	return new Response($view->render(), 200, array(
+		'Access-Control-Allow-Origin' => Request::header('Origin', '*'),
+		'Content-type' => 'text/javascript; charset=utf-8',
+	));
+});
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 Route::get('results/usage-per-session/(:num)', function ($id) {
