@@ -32,9 +32,97 @@
 |
 */
 
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 Route::get('/', function()
 {
-	return View::make('home.index');
+	Asset::add('home', 'js/home.js');
+	return View::make('home.index', array(
+		'experiments' => Experiment::all(),
+		'experimentsubjects' => Experimentsubject::all(),
+		'storeIds' => Experimentobservation::get_store_ids(),
+	));
+});
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+Route::get('experiments/(:num)', 'experiments@experiment');
+Route::controller('Experiments');
+Route::controller('Experimentsubjects');
+Route::controller('Experimentobservations');
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+Route::get('/clicktracking.js', function () {
+	$view = View::make('javascript.clicktracking', array(
+		'experiments' => Experiment::allAsArray(),
+		'experimentsubjects' => Experimentsubject::allAsArray(),
+	));
+
+	return new Response($view->render(), 200, array(
+		'Access-Control-Allow-Origin' => Request::header('Origin', '*'),
+		'Content-type' => 'text/javascript; charset=utf-8',
+	));
+});
+
+Route::get('/clicktracking.hmap.js', function () {
+	$view = View::make('javascript.clicktrackinghmap');
+
+	return new Response($view->render(), 200, array(
+		'Access-Control-Allow-Origin' => Request::header('Origin', '*'),
+		'Content-type' => 'text/javascript; charset=utf-8',
+	));
+});
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+Route::get('results/usage-per-session/(:num)', function ($id) {
+	$results = Experimentobservation::usage_per_session($id);
+	return Response::json($results);
+});
+Route::get('results/usage-per-session/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::usage_per_session($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/element-ranking/(:num)', function ($id) {
+	$results = Experimentobservation::element_ranking($id);
+	return Response::json($results);
+});
+Route::get('results/element-ranking/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::element_ranking($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/time-to-first-click/(:num)', function ($id) {
+	$results = Experimentobservation::time_to_first_click($id);
+	return Response::json($results);
+});
+Route::get('results/time-to-first-click/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::time_to_first_click($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/number-of-average-clicks/(:num)', function ($id) {
+	$results = Experimentobservation::number_of_average_clicks($id);
+	return Response::json($results);
+});
+Route::get('results/number-of-average-clicks/(:num)/store/(:num)', function ($id, $storeId) {
+	$results = Experimentobservation::number_of_average_clicks($id, $storeId);
+	return Response::json($results);
+});
+
+/* * * * * * * * * * * * * * * */
+
+Route::get('results/(:any)', function () {
+	return Response::error('404');
 });
 
 /*
@@ -92,7 +180,17 @@ Event::listen('500', function()
 
 Route::filter('before', function()
 {
-	// Do stuff before every request to your application...
+	// include jquery
+	Asset::add('jquery','js/jquery-1.8.2.min.js');
+	
+	// include backbone
+	Asset::add('underscore','js/underscore-min.js');
+	Asset::add('backbone','js/backbone-min.js');
+
+	// include toastr
+	Asset::add('toastrcss','css/toastr.css');
+	Asset::add('toastrcssresponsive','css/toastr-responsive.css');
+	Asset::add('toastrjs','js/toastr.js');
 });
 
 Route::filter('after', function($response)
